@@ -8,6 +8,6 @@ export class EmployeesController {
 
     @Post()
     async createEmployee(@Body() employeeData: Partial<Employees>): Promise<Employees> {
-        return this.employeesService.create(Body);
+        return this.employeesService.create(employeeData);
     }
 }
