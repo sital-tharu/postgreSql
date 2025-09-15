@@ -9,6 +9,11 @@ export class EmployeesService {
         @InjectRepository(Employees)
         private employeesRepository: Repository<Employees>,
     ){}
+    async create(employeeData: Partial<Employees>): Promise<Employees> {
+        const employee = this.employeesRepository.create(employeeData);
+        return this.employeesRepository.save(employee);
+    }
+
 
    
 }
