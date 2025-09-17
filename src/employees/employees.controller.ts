@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param } from '@nestjs/common';
 import { EmployeesService } from './employees.service';
 import { Employees } from './employees.entity';
 
@@ -13,5 +13,9 @@ export class EmployeesController {
     @Get()
     async findAllEmployees(): Promise<Employees[]> {
         return this.employeesService.findAll();
+    }
+    @Get(':id')
+    async findEmployeeById(@Param('id') id: number) : Promise<Employees> {
+        return this.employeesService.findOne(id);
     }
 }
