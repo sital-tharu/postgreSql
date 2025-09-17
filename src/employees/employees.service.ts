@@ -13,6 +13,9 @@ export class EmployeesService {
         const employee = this.employeesRepository.create(employeeData);
         return this.employeesRepository.save(employee);
     }
+    async findAll(): Promise<Employees[]> {
+        return this.employeesRepository.find();
+    }
 
 
    
