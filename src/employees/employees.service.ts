@@ -5,10 +5,10 @@ import { Repository } from 'typeorm';
 
 @Injectable()
 export class EmployeesService {
-    constructor (
+    constructor(
         @InjectRepository(Employees)
         private employeesRepository: Repository<Employees>,
-    ){}
+    ) { }
     async create(employeeData: Partial<Employees>): Promise<Employees> {
         const employee = this.employeesRepository.create(employeeData);
         return this.employeesRepository.save(employee);
@@ -17,24 +17,28 @@ export class EmployeesService {
         return this.employeesRepository.find();
     }
     async findOne(id: number): Promise<Employees> {
-       const employee = await this.employeesRepository.findOneBy ({id});
-       if(!employee){
-        throw new NotFoundException(`Employee with ID ${id} not found`);
-       }
-       return employee;
+        const employee = await this.employeesRepository.findOneBy({ id });
+        if (!employee) {
+            throw new NotFoundException(`Employee with ID ${id} not found`);
+        }
+        return employee;
     }
-    async update(id: number, updatedData: Partial<Employees>): Promise <Employees> {
-        const employee = await this.employeesRepository.findOneBy({id});
-        if(!employee) {
+    async update(id: number, updatedData: Partial<Employees>): Promise<Employees> {
+        const employee = await this.employeesRepository.findOneBy({ id });
+        if (!employee) {
             throw new NotFoundException(`Employee with ID ${id} not found`);
         }
         const updatedEmployee = Object.assign(employee, updatedData);
         return this.employeesRepository.save(updatedEmployee);
-
-
-
+    }
+    async delete(id: number): Promise<{ message: string }> {
+        const result = await this.employeesRepository.delete(id);
+        if (result.affected === 0) {
+            throw new NotFoundException(`Employee with ID ${id} not found`);
+        }
+        return { message: `Employee id ${id} deleted successfully` };
     }
 
 
-   
+
 }
