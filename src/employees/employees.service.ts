@@ -38,20 +38,20 @@ export class EmployeesService {
         }
         return { message: `Employee id ${id} deleted successfully` };
     }
-async search(filters: {name? : string ; deprtment?: string; }) : Promise<Employees[]> {
-    const query = this.employeesRepository.createQueryBuilder('employee');
-    if (filters.name){
-        query.andWhere('employee.name ILIKE :name', {name: `%${filters.name}%`});
+    async search(filters: { name?: string; deprtment?: string; }): Promise<Employees[]> {
+        const query = this.employeesRepository.createQueryBuilder('employee');
+        if (filters.name) {
+            query.andWhere('employee.name ILIKE :name', { name: `%${filters.name}%` });
+
+        }
+        if (filters.deprtment) {
+            query.andWhere('employee.department LIKE :dept', { dept: filters.deprtment });
+
+        }
+        return query.getMany();
+
 
     }
-    if (filters.deprtment){
-        query.andWhere('employee.department LIKE :dept', {dept: `${filters.deprtment}`});
-
-    }
-    return query.getMany();
-
-
-}
 
 
 }
