@@ -14,13 +14,13 @@ export class EmployeesController {
     async findAllEmployees(): Promise<Employees[]> {
         return this.employeesService.findAll();
     }
-    @Get('search')
+        @Get('search')
     async searchEmployees(
-        @Query ('name') name?: string,
-        @Query ('department') department?: string ,) : Promise <Employees[]> {
-            return this.employeesService.search({name, deprtment: department});       
+        @Query('name') Name?: string,
+        @Query('department') department?: string,): Promise<Employees[]> {
+        return this.employeesService.search({ Name, department: department });
 
-        }
+    }
 
     
 
