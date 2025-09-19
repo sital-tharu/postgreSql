@@ -36,16 +36,16 @@ export class EmployeesService {
         if (result.affected === 0) {
             throw new NotFoundException(`Employee with ID ${id} not found`);
         }
-        return { message: `Employee id ${id} deleted successfully` };
+        return { message: `Employees id ${id} deleted successfully` };
     }
-    async search(filters: { name?: string; deprtment?: string; }): Promise<Employees[]> {
+    async search(filters: { Name?: string; department?: string; }): Promise<Employees[]> {
         const query = this.employeesRepository.createQueryBuilder('employee');
-        if (filters.name) {
-            query.andWhere('employee.name ILIKE :name', { name: `%${filters.name}%` });
+        if (filters.Name) {
+            query.andWhere('employee.Name ILIKE :name', { name: `%${filters.Name}%` });
 
         }
-        if (filters.deprtment) {
-            query.andWhere('employee.department LIKE :dept', { dept: filters.deprtment });
+        if (filters.department) {
+            query.andWhere('employee.dipartment ILIKE :dipartment', { dipartment: `%${filters.department}%` });
 
         }
         return query.getMany();
