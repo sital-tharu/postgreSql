@@ -28,7 +28,7 @@ export class SupabaseAuthGuard implements CanActivate {
     catch (error) {
   throw new UnauthorizedException('Invalid or expired token');
 }
-
-    return true;
-  }
 }
+}
+
+
