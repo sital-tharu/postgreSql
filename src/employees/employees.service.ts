@@ -45,7 +45,7 @@ export class EmployeesService {
 
         }
         if (filters.department) {
-            query.andWhere('employee.dipartment ILIKE :dipartment', { dipartment: `%${filters.department}%` });
+            query.andWhere('employee.dipartment  = :dipartment', { dipartment: filters.department });
 
         }
         return query.getMany();
