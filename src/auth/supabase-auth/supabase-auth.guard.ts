@@ -1,4 +1,4 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import * as jwt from 'jsonwebtoken';
 import{request} from 'express';
@@ -17,6 +17,9 @@ export class SupabaseAuthGuard implements CanActivate {
     }
     const token = authHeader.split(' ')[1];
     const jwtSecret = this.configService.get<string>('SUPABASE_JWT_SECRET');
+    if(!jwtSecret){
+      throw new UnauthorizedException('JWT Secret not configured');
+    }
 
     return true;
   }
