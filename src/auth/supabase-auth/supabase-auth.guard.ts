@@ -20,6 +20,14 @@ export class SupabaseAuthGuard implements CanActivate {
     if(!jwtSecret){
       throw new UnauthorizedException('JWT Secret not configured');
     }
+    try{
+      const decoded = jwt.verify(token, jwtSecret);
+      request['user'] = decoded;
+      return true;   
+    }
+    catch (error) {
+  throw new UnauthorizedException('Invalid or expired token');
+}
 
     return true;
   }
